@@ -9,10 +9,10 @@ namespace MentalHealth.DAL.Interfaces.Chats;
 
 public interface ISessionRepository
 {
-	Task<IEnumerable<ChatSession>> GetChatSessionAsync();
-	Task<ChatSession> GetSessionAsync(Guid chatId);
-	Task CreateSessionAsync (ChatSession chatSession);
-	Task DeleteSessionAsync (Guid chatId);
-	Task UpdateSessionAsync (ChatSession chatSession);
+	Task<ChatSession?> GetSessionAsync(Guid chatId);
+	Task<IEnumerable<ChatSession>> GetChatSessionsAsync();
 	Task<IEnumerable<ChatSession>> GetSessionsByUserAsync(Guid userId);
+	Task CreateSessionAsync (ChatSession chatSession);
+	Task UpdateSessionAsync (ChatSession chatSession);
+	Task DeleteSessionAsync (Guid chatId);
 }
