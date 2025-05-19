@@ -1,10 +1,12 @@
 ﻿using MentalHealth.DAL.Entities.Chats.Chat;
 using MentalHealth.DAL.Interfaces.Chats;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace MentalHealth.DAL.Repositories.Chats
 {
@@ -16,34 +18,54 @@ namespace MentalHealth.DAL.Repositories.Chats
 			_context = context;
 		}
 
-		public Task CreateSessionAsync(ChatSession chatSession)
+		public async Task CreateSessionAsync(ChatSession chatSession)
 		{
-			throw new NotImplementedException();
+			if (chatSession == null) throw new ArgumentNullException(nameof(chatSession));
+			await _context.Sessions.AddAsync(chatSession);
 		}
 
-		public Task DeleteSessionAsync(Guid chatId)
+		public async Task DeleteSessionAsync(Guid chatId)
 		{
-			throw new NotImplementedException();
+			var existingSession = await GetSessionAsync(chatId);
+			if (existingSession == null)
+				throw new KeyNotFoundException($"ChatSession with ID {chatId} not found.");
+
+
+			_context.Sessions.Remove(existingSession);
+			await _context.SaveChangesAsync();
 		}
 
-		public Task<IEnumerable<ChatSession>> GetChatSessionAsync()
+		public async Task<IEnumerable<ChatSession>> GetChatSessionsAsync()
 		{
-			throw new NotImplementedException();
+			return await _context.Sessions
+				.Include(s => s.User)
+				.ToListAsync();
 		}
 
-		public Task<ChatSession> GetSessionAsync(Guid chatId)
+		public async Task<ChatSession?> GetSessionAsync(Guid chatId)
 		{
-			throw new NotImplementedException();
+			return await _context.Sessions
+				.Include(s => s.User)
+				.Include(s => s.Messages)
+				.FirstOrDefaultAsync(s => s.Id == chatId);
 		}
 
-		public Task<IEnumerable<ChatSession>> GetSessionsByUserAsync(Guid userId)
+		public async Task<IEnumerable<ChatSession>> GetSessionsByUserAsync(Guid userId)
 		{
-			throw new NotImplementedException();
+			return await _context.Sessions
+				.Where(s => s.UserId == userId)
+				.OrderByDescending(s => s.LastVisit ?? s.StartedAt)
+				.ToListAsync();
 		}
 
-		public Task UpdateSessionAsync(ChatSession chatSession)
+		public async Task UpdateSessionAsync(ChatSession chatSession)
 		{
-			throw new NotImplementedException();
+			var existing = await GetSessionAsync(chatSession.Id);
+			if (existing == null)
+				throw new KeyNotFoundException($"ChatSession with ID {chatSession.Id} not found.");
+
+			_context.Sessions.Update(chatSession);
+			await _context.SaveChangesAsync();
 		}
 	}
 }
