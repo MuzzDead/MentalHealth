@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealth.WebAPI", "MentalHealth\MentalHealth.WebAPI.csproj", "{180C8B38-FF92-4C71-BE21-51FB4B9EF999}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealth.DAL", "MentalHealth.DAL\MentalHealth.DAL.csproj", "{E1D32B80-CFE3-4F9F-8B17-8B86AD70241A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealth.BLL", "MentalHealth.BLL\MentalHealth.BLL.csproj", "{C29ACB97-F41E-419A-8092-44733DBFB858}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E1D32B80-CFE3-4F9F-8B17-8B86AD70241A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1D32B80-CFE3-4F9F-8B17-8B86AD70241A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1D32B80-CFE3-4F9F-8B17-8B86AD70241A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C29ACB97-F41E-419A-8092-44733DBFB858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29ACB97-F41E-419A-8092-44733DBFB858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C29ACB97-F41E-419A-8092-44733DBFB858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C29ACB97-F41E-419A-8092-44733DBFB858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
