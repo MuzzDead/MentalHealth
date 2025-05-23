@@ -1,4 +1,6 @@
 
+using MentalHealth.BLL.Mapping.Chat;
+
 namespace MentalHealth
 {
     public class Program
@@ -12,8 +14,9 @@ namespace MentalHealth
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+			builder.Services.AddAutoMapper(typeof(ChatProfile).Assembly);
 
-            var app = builder.Build();
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
