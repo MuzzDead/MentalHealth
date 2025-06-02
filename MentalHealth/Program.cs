@@ -1,5 +1,10 @@
 
+using MentalHealth.BLL.Interfaces.Chats;
 using MentalHealth.BLL.Mapping.Chat;
+using MentalHealth.BLL.Services.Chats;
+using MentalHealth.DAL.Interfaces.Chats;
+using MentalHealth.DAL.Repositories.Chats;
+using MentalHealth.WebAPI.Hubs;
 
 namespace MentalHealth
 {
@@ -14,7 +19,15 @@ namespace MentalHealth
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+			// Add Services & Repositories to the container
+            builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+            builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+            builder.Services.AddScoped<IMessageService, MessageService>();
+            builder.Services.AddScoped<ISessionService, SessionService>();
+
 			builder.Services.AddAutoMapper(typeof(ChatProfile).Assembly);
+            builder.Services.AddSignalR();
 
 			var app = builder.Build();
 
@@ -29,7 +42,9 @@ namespace MentalHealth
             app.UseAuthorization();
 
 
-            app.MapControllers();
+			app.MapHub<ChatHub>("/chat");
+
+			app.MapControllers();
 
             app.Run();
         }
